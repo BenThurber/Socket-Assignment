@@ -58,28 +58,31 @@ def client():
     
     # Create a socket
     try:
-        sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sockfd.settimeout(TIMEOUT)
-    except socket.gaierror:
-        sockfd.close()
+        clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientsocket.settimeout(TIMEOUT)
+    except OSError:
+        clientsocket.close()
         error(COULDNT_CREATE_ERR)
     
     # Try to connect
     try:
-        sockfd.connect(address[0][4])
-    except ConnectionRefusedError:
-        sockfd.close()
+        clientsocket.connect(address[0][4])
+    except (OSError, ConnectionRefusedError):
+        clientsocket.close()
         error(COULDNT_CONNECT_ERR)
     
     # Build a FileRequest
     file_request = FileRequest(file_name)
     
     # Send FileRequest
-    n_bytes_sent = sockfd.send(file_request.get_bytearray())
-    print(n_bytes_sent, "Bytes sent")
+    try:
+        n_bytes_sent = clientsocket.sendall(file_request.get_bytearray())
+        print(n_bytes_sent, "Bytes sent")
+    except OSError:
+        error(COULDNT_SEND_ERR)
     
     # Recieve a number of bytes equal to the length of the header
-    server_file_response_header = sockfd.recv(FileResponse.header_byte_len())
+    server_file_response_header = clientsocket.recv(FileResponse.header_byte_len())
     print("Response header:", server_file_response_header)
     for byte in server_file_response_header:
         print(byte)
@@ -93,22 +96,20 @@ def client():
     print("Header DataLen:", DataLen)
     
     ## Recieve an amount of bytes equal to the length of the file (Temp?)
-    #file_bytearray = sockfd.recv(DataLen)
+    #file_bytearray = clientsocket.recv(DataLen)
     
     # Write bytearray to local file
     new_filename = os.path.join(os.path.dirname(file_name), "new_"+os.path.basename(file_name))
     #write_bytes_to_file(new_filename, file_bytearray)
     if status == 1:
-        download_file_from_socket(new_filename, sockfd)
+        download_file_from_socket(new_filename, clientsocket, DataLen)
     else:
         error(FILE_NOT_ON_SERVER_ERR)
     
 
 
 
-
-
-def download_file_from_socket(file_name, sockfd):
+def download_file_from_socket(file_name, clientsocket, file_size):
     """Takes a file_name (directory) and a socket. And downloads 
     the file from the socket in blocks.  Assumes the next byte 
     from the socket is the first byte of the file."""
@@ -119,27 +120,27 @@ def download_file_from_socket(file_name, sockfd):
         reached_EOF = False
         while not reached_EOF:
             
-            data_block = sockfd.recv(BLOCK_SIZE)  #data_block acts as a buffer
+            data_block = clientsocket.recv(BLOCK_SIZE)  #data_block acts as a buffer
             
             if data_block is None:   # Nessesary?
                 reached_EOF = True
                 break
-            if len(data_block) <= 0:    # Is this the last byte?
+            if downloaded_bytes + len(data_block) >= file_size:    # Have we recieved the whole file?
                 print("Less than Block", len(data_block))
                 reached_EOF = True
             
             outfile.write(data_block)
             downloaded_bytes += len(data_block)
             print("downloaded {} bytes".format(downloaded_bytes))
-            time.sleep(0.01)
+            #time.sleep(SMALL_TIME)
     
-    except TimeoutError:
-        error(TimeoutError)
+    except socket.timeout:
+        error(TIMOUT_ERR)
     except IOError:
         error(COULDNT_WRITE_FILE_ERR)
     finally:
         outfile.close()
-        sockfd.close()
+        clientsocket.close()
 
 
 

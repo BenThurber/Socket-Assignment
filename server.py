@@ -31,36 +31,42 @@ def build_file_response(file_name):
     return FileResponse(file_bytearray, status_code)
 
 
+
+def print_sent_message(file_name, num_bytes_sent):
+    """Prints a message describing what was sent to the client."""
+    print(SENT_FILE_MESSAGE.format(os.path.basename(file_name), num_bytes_sent))
+
+
 def server():
-    sockfd = None
+    serversocket = None
     client_socket = None
     
-    port_num = get_server_port_number()
-    
-    # Create and Bind
     try:
-        sockfd = socket.socket()
-        sockfd.settimeout(TIMEOUT)
-        sockfd.bind((LOCAL_HOST, port_num))
-    except socket.gaierror:
-        sockfd.close()
-        error(COULDNT_BIND_ERR)
+        port_num = get_server_port_number()
+        
+        # Create and Bind
+        try:
+            serversocket = socket.socket()
+            serversocket.settimeout(TIMEOUT)
+            serversocket.bind((LOCAL_HOST, port_num))
+        except socket.gaierror:
+            serversocket.close()
+            error(COULDNT_BIND_ERR)
+        
+        # Listen
+        try:
+            serversocket.listen()
+        except OSError:  # What error should this be?
+            serversocket.close()
+            error(SOCKET_LISTEN_ERR)
+        
+        
     
-    # Listen
-    try:
-        sockfd.listen()
-    except socket.gaierror:  # What error should this be?
-        sockfd.close()
-        error(SOCKET_LISTEN_ERR)
-    
-    
-    client_socket = None
-    try:
         # Accept incomming requests
         while True:
             
             # Accept incomming connection request
-            client_socket, client_addr = sockfd.accept()
+            client_socket, client_addr = serversocket.accept()
             client_socket.settimeout(TIMEOUT)
             
             # Recieve header from connection
@@ -86,18 +92,32 @@ def server():
             
             # Send FileResponse in blocks
             status_code = int(file_exists_locally(file_name))
+            print("File_size =", os.path.getsize(file_name))
             file_response = FileResponse(file_name, status_code)
+            num_bytes_sent = 0
             for byte_block in file_response.read_byte_block():
-                client_socket.send(byte_block)
-                time.sleep(0.01)
+                n = send_all(byte_block, client_socket)
+                num_bytes_sent += n
             
+            print_sent_message(file_name, num_bytes_sent)
+            
+            
+                    
+            
+            client_socket.shutdown(socket.SHUT_WR)
+            
+            
+            client_socket.close()
     
     except socket.timeout:
         error(TIMOUT_ERR)
+    
     finally:
+        print("Everything is closed.")
         if client_socket is not None:
             client_socket.close()
-        sockfd.close()
+        if serversocket is not None:
+            serversocket.close()
         
         
     

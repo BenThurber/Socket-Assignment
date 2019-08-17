@@ -251,9 +251,9 @@ class FileResponse(Record):
             except IOError:
                 infile = None
             
-            if infile is not None and \
-               self.HEADER_DICT["StatusCode"][-1] != 1 or \
-               self.HEADER_DICT["DataLen"][-1] == 0:
+            if infile is not None and (
+                self.HEADER_DICT["StatusCode"][-1] != 1 or \
+                self.HEADER_DICT["DataLen"][-1] == 0):
                 infile.seek(0, 2)  # Move file handle to EOF (Don't send file)
             
             # Yeilds blocks of data

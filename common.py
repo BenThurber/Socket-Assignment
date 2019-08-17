@@ -7,6 +7,8 @@ MIN_PORT_NUM = 1024
 MAX_PORT_NUM = 64000
 BLOCK_SIZE = 4096
 
+SMALL_TIME = 0.0002  # For Debugging
+
 TIMEOUT = 5.0    # Timeout in seconds
 
 BAD_PORT_NUMBER_ERR = "ERROR port number is not in not in the range {} to {} \
@@ -14,6 +16,7 @@ or it is a bad format.".format(MIN_PORT_NUM, MAX_PORT_NUM)
 COULDNT_BIND_ERR = "ERROR on binding to socket."
 COULDNT_CREATE_ERR = "ERROR on createing socket"
 COULDNT_CONNECT_ERR = "ERROR on connecting to socket."
+COULDNT_SEND_ERR = "ERROR couldn't send data on socket."
 SOCKET_LISTEN_ERR = "ERROR on listening to socket."
 MISSING_ARG_ERR = "ERROR missing one or more command line arguments."
 FILE_ALREADY_EXISTS_ERR = "ERROR the file {} already exists locally."
@@ -23,6 +26,8 @@ INVALID_FILE_REQUEST_ERR = "ERROR invalid FileRequest"
 INVALID_FILE_RESPONSE_ERR = "ERROR invalid FileResponse"
 COULDNT_WRITE_FILE_ERR = "ERROR couldn't write file to disk."
 FILE_NOT_ON_SERVER_ERR = "ERROR the server couldn't retrieve the file."
+
+SENT_FILE_MESSAGE = "Sent {} to client, {} bytes transfered."
 
 LOCAL_HOST = "127.0.0.1"  # or locallhost.com
 
@@ -36,6 +41,21 @@ def error(message="", *sockets, exit_all=True):
         exit(message)
     else:
         print(message)
+
+
+def send_all(data, sock):
+    """Equivalent to socket.sendall but counts and returns 
+    the number of bytes transfered."""
+    sent_bytes = 0
+    while sent_bytes < len(data):
+        sent_bytes += sock.send(data[sent_bytes:])
+    
+    return sent_bytes
+
+
+def recv_all(data, sock):
+    pass
+
     
 def convert_portno_str(port_num):
     """Check that port number is a number is is in correct 
