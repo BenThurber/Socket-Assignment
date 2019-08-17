@@ -73,6 +73,7 @@ def client():
     
     # Build a FileRequest
     file_request = FileRequest(file_name)
+    print("File Request:", file_request.get_bytearray())
     
     # Send FileRequest
     try:
@@ -83,6 +84,9 @@ def client():
     
     # Recieve a number of bytes equal to the length of the header
     server_file_response_header = clientsocket.recv(FileResponse.header_byte_len())
+    server_file_response_header = FileResponse.header_to_host_byte_ord(
+        server_file_response_header
+    )
     print("Response header:", server_file_response_header)
     for byte in server_file_response_header:
         print(byte)

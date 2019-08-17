@@ -16,6 +16,7 @@ FileRequest    FileResponse
 """
 
 from collections import OrderedDict
+import socket
 from packet import Packet
 import math
 import os
@@ -47,11 +48,17 @@ class Record(Packet):
         self._append_header_dictionary(header_dict)
         self._append_payload(payload_bytes)
     
-    def _append_header_dictionary(self, dictionary):
+    def _append_header_dictionary(self, dictionary, in_network_order=True):
         """Helper function that takes an OrderedDict of values 
         (bit_len, value).  Adds each value to the internal 
-        bytearray in order."""
+        bytearray in order.  If in_network_order then 
+        converts 16-bit and 32-bit integers to network 
+        byte order."""
         for bit_len, value in dictionary.values():
+            
+            if in_network_order:
+                value = host_to_network(bit_len, value)
+            
             self.append(value, bit_len)
     
     def _append_payload(self, payload_bytearray):
@@ -59,6 +66,31 @@ class Record(Packet):
         it to the internal bytearray."""
         for byte in payload_bytearray:
             self.append(byte, BYTE_LEN)
+    
+    @staticmethod
+    def header_to_host_byte_ord(packet_bytearray, header_dict):
+        """Takes a bytearray and a header_dict.  Assumes the 
+        begining of packet_bytearray is a header in network 
+        byte order.  Returns a bytearray representing a 
+        header in host order."""
+        header_len = sum(bit_len for bit_len, _ in header_dict.values())
+        header_len_bytes = math.ceil(header_len / BYTE_LEN)
+        
+        pkt_net = Packet(header_len, packet_bytearray[:header_len_bytes])
+        pkt_host = Packet(header_len)
+        
+        l_bit = 0
+        r_bit = 0
+        for bit_len, _ in header_dict.values():
+            r_bit += bit_len
+            
+            value = pkt_net.get_from_bits(l_bit, r_bit)
+            value = network_to_host(bit_len, value)
+            pkt_host.append(value, bit_len)
+            
+            l_bit = r_bit + 1
+        
+        return pkt_host.get_bytearray()
     
 
 
@@ -93,6 +125,17 @@ class FileRequest(Record):
         
         super().__init__(self.HEADER_DICT, file_name_bytes)
         
+    
+    @staticmethod
+    def header_to_host_byte_ord(packet_bytearray):
+        """Takes a bytearray.  Assumes the begining of 
+        packet_bytearray is a header in network byte order.  
+        Returns a bytearray representing a header in 
+        host order."""
+        return Record.header_to_host_byte_ord(
+            packet_bytearray, FileRequest.HEADER_DICT
+        )
+    
     
     @staticmethod
     def get_filenameLen_from_header(packet_bytearray):
@@ -208,6 +251,17 @@ class FileResponse(Record):
             self.HEADER_DICT["DataLen"][-1] = 0
         
         super().__init__(self.HEADER_DICT, bytearray())
+    
+    
+    @staticmethod
+    def header_to_host_byte_ord(packet_bytearray):
+        """Takes a bytearray.  Assumes the begining of 
+        packet_bytearray is a header in network byte order.  
+        Returns a bytearray representing a header in 
+        host order."""
+        return Record.header_to_host_byte_ord(
+            packet_bytearray, FileResponse.HEADER_DICT
+        )
     
     
     @staticmethod
@@ -362,6 +416,33 @@ class FileResponse(Record):
 
 
 
+def network_to_host(bit_len, value):
+    """Convert the integer value of size bit_len to host order."""
+    if (0 <= bit_len <= BYTE_LEN):
+        host_order_value = value
+    elif (BYTE_LEN < bit_len <= BYTE_LEN*2):
+        host_order_value = socket.ntohs(value)
+    elif (BYTE_LEN*2 < bit_len <= BYTE_LEN*4):
+        host_order_value = socket.ntohl(value)
+    else:
+        raise OverflowError(
+            "Can't convert greater than 32-bit to host order."
+        )
+    return host_order_value
 
+
+def host_to_network(bit_len, value):
+    """Convert the integer value of size bit_len to network order."""
+    if (0 <= bit_len <= BYTE_LEN):
+        net_order_value = value
+    elif (BYTE_LEN < bit_len <= BYTE_LEN*2):
+        net_order_value = socket.htons(value)
+    elif (BYTE_LEN*2 < bit_len <= BYTE_LEN*4):
+        net_order_value = socket.htonl(value)
+    else:
+        raise OverflowError(
+            "Can't convert greater than 32-bit to network order."
+        )
+    return net_order_value
 
 

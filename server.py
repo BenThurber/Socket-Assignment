@@ -73,31 +73,44 @@ def server():
             client_request_header = client_socket.recv(
                 FileRequest.header_byte_len()
             )
+            
             if len(client_request_header) != FileRequest.header_byte_len():
                 error(INVALID_FILE_REQUEST_ERR)
+            
+            print("File Request nbo:", client_request_header)
+            
+            # Convert to host byte order
+            client_request_header = FileRequest.header_to_host_byte_ord(
+                client_request_header
+            )
+            
+            print("File Request hbo:", client_request_header)
             
             # Check header validity
             if not FileRequest.is_valid_header(client_request_header):
                 error(INVALID_FILE_REQUEST_ERR)
             # Extract filenameLen from header
-            n = FileRequest.get_filenameLen_from_header(client_request_header)
+            file_name_len = FileRequest.get_filenameLen_from_header(client_request_header)
             
             # Read just the filename from socket
-            file_name_bytes = client_socket.recv(n)
+            file_name_bytes = client_socket.recv(file_name_len)
             file_name = file_name_bytes.decode(ENCODING_TYPE)
             
             # Check length of recieved bytes
-            if len(file_name_bytes) != n:
+            if len(file_name_bytes) != file_name_len:
                 error(INVALID_FILE_REQUEST_ERR)
             
             # Send FileResponse in blocks
             status_code = int(file_exists_locally(file_name))
             print("File_size =", os.path.getsize(file_name))
             file_response = FileResponse(file_name, status_code)
-            num_bytes_sent = 0
-            for byte_block in file_response.read_byte_block():
-                n = send_all(byte_block, client_socket)
-                num_bytes_sent += n
+            try:
+                num_bytes_sent = 0
+                for byte_block in file_response.read_byte_block():
+                    n = send_all(byte_block, client_socket)
+                    num_bytes_sent += n
+            except OSError:
+                error(COULDNT_SEND_ERR)
             
             print_sent_message(file_name, num_bytes_sent)
             
