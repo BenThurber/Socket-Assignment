@@ -1,0 +1,709 @@
+%!PS-Adobe-3.0
+%%Title: client.py
+%%For: Ben
+%%Creator: VIM - Vi IMproved 7.3 (2010 Aug 15)
+%%CreationDate: Sat Aug 17 10:15:51 2019
+%%DocumentData: Clean8Bit
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%BoundingBox: 59 49 564 800
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%DocumentSuppliedResources: procset VIM-Prolog 1.4 1
+%%+ encoding VIM-latin1 1.0 0
+%%Requirements: duplex collate color
+%%EndComments
+%%BeginDefaults
+%%PageResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%PageMedia: A4
+%%EndDefaults
+%%BeginProlog
+%%BeginResource: procset VIM-Prolog
+%%BeginDocument: /usr/share/vim/vim73/print/prolog.ps
+%!PS-Adobe-3.0 Resource-ProcSet
+%%Title: VIM-Prolog
+%%Version: 1.4 1
+%%EndComments
+% Editing of this file is NOT RECOMMENDED.  You run a very good risk of causing
+% all PostScript printing from VIM failing if you do.  PostScript is not called
+% a write-only language for nothing!
+/packedarray where not{userdict begin/setpacking/pop load def/currentpacking
+false def end}{pop}ifelse/CP currentpacking def true setpacking
+/bd{bind def}bind def/ld{load def}bd/ed{exch def}bd/d/def ld
+/db{dict begin}bd/cde{currentdict end}bd
+/T true d/F false d
+/SO null d/sv{/SO save d}bd/re{SO restore}bd
+/L2 systemdict/languagelevel 2 copy known{get exec}{pop pop 1}ifelse 2 ge d
+/m/moveto ld/s/show ld /ms{m s}bd /g/setgray ld/r/setrgbcolor ld/sp{showpage}bd
+/gs/gsave ld/gr/grestore ld/cp/currentpoint ld
+/ul{gs UW setlinewidth cp UO add 2 copy newpath m 3 1 roll add exch lineto
+stroke gr}bd
+/bg{gs r cp BO add 4 -2 roll rectfill gr}bd
+/sl{90 rotate 0 exch translate}bd
+L2{
+/sspd{mark exch{setpagedevice}stopped cleartomark}bd
+/nc{1 db/NumCopies ed cde sspd}bd
+/sps{3 db/Orientation ed[3 1 roll]/PageSize ed/ImagingBBox null d cde sspd}bd
+/dt{2 db/Tumble ed/Duplex ed cde sspd}bd
+/c{1 db/Collate ed cde sspd}bd
+}{
+/nc{/#copies ed}bd
+/sps{statusdict/setpage get exec}bd
+/dt{statusdict/settumble 2 copy known{get exec}{pop pop pop}ifelse
+statusdict/setduplexmode 2 copy known{get exec}{pop pop pop}ifelse}bd
+/c{pop}bd
+}ifelse
+/ffs{findfont exch scalefont d}bd/sf{setfont}bd
+/ref{1 db findfont dup maxlength dict/NFD ed{exch dup/FID ne{exch NFD 3 1 roll
+put}{pop pop}ifelse}forall/Encoding findresource dup length 256 eq{NFD/Encoding
+3 -1 roll put}{pop}ifelse NFD dup/FontType get 3 ne{/CharStrings}{/CharProcs}
+ifelse 2 copy known{2 copy get dup maxlength dict copy[/questiondown/space]{2
+copy known{2 copy get 2 index/.notdef 3 -1 roll put pop exit}if pop}forall put
+}{pop pop}ifelse dup NFD/FontName 3 -1 roll put NFD definefont pop end}bd
+CP setpacking
+(\004)cvn{}bd
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%BeginResource: encoding VIM-latin1
+%%BeginDocument: /usr/share/vim/vim73/print/latin1.ps
+%!PS-Adobe-3.0 Resource-Encoding
+%%Title: VIM-latin1
+%%Version: 1.0 0
+%%EndComments
+/VIM-latin1[
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash
+/zero /one /two /three /four /five /six /seven
+/eight /nine /colon /semicolon /less /equal /greater /question
+/at /A /B /C /D /E /F /G
+/H /I /J /K /L /M /N /O
+/P /Q /R /S /T /U /V /W
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+/grave /a /b /c /d /e /f /g
+/h /i /j /k /l /m /n /o
+/p /q /r /s /t /u /v /w
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis]
+/Encoding defineresource pop
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%EndProlog
+%%BeginSetup
+595 842 0 sps
+1 nc
+T F dt
+T c
+%%IncludeResource: font Courier
+/_F0 /VIM-latin1 /Courier ref
+/F0 10 /_F0 ffs
+%%IncludeResource: font Courier-Bold
+/_F1 /VIM-latin1 /Courier-Bold ref
+/F1 10 /_F1 ffs
+%%IncludeResource: font Courier-Oblique
+/_F2 /VIM-latin1 /Courier-Oblique ref
+/F2 10 /_F2 ffs
+%%IncludeResource: font Courier-BoldOblique
+/_F3 /VIM-latin1 /Courier-BoldOblique ref
+/F3 10 /_F3 ffs
+/UO -1 d
+/UW 0.5 d
+/BO -2.5 d
+%%EndSetup
+%%Page: 1 1
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(client.py                                                                     Page 1)59.5 792.4 ms
+F0 sf
+0 0 0.753 r
+("""Run with 'python client.py <address> <port number> <file name>'""")59.5 772.4 ms
+0.753 0 0.753 r
+(from)59.5 762.4 ms
+0 g
+( records )s
+0.753 0 0.753 r
+(import)s
+0 g
+( FileRequest, FileResponse)s
+0.753 0 0.753 r
+(from)59.5 752.4 ms
+0 g
+( records )s
+0.753 0 0.753 r
+(import)s
+0 g
+( FILE_REQUEST_MAGIC_NO, FILE_RESPONSE_MAGIC_NO)s
+0.753 0 0.753 r
+(import)59.5 742.4 ms
+0 g
+( socket)s
+0.753 0 0.753 r
+(from)59.5 732.4 ms
+0 g
+( common )s
+0.753 0 0.753 r
+(import)s
+0 g
+( *)s
+0.753 0 0.753 r
+(import)59.5 722.4 ms
+0 g
+( time)s
+0.753 0 0.753 r
+(import)59.5 712.4 ms
+0 g
+( sys)s
+0.753 0 0.753 r
+(import)59.5 702.4 ms
+0 g
+( os)s
+0 0.502 0 r
+(def)59.5 672.4 ms
+0 g
+( )s
+0.502 0.502 0 r
+(get_address_portno_filename)s
+0 g
+(\(\):)s
+(    )59.5 662.4 ms
+0 0 0.753 r
+("""Gets the address, port number and file name from the )s
+(    command line.  Returns tuple: \(address_str, port_num, file_name\)""")59.5 652.4 ms
+0 g
+(    )59.5 642.4 ms
+0 0.502 0 r
+(try)s
+0 g
+(:)s
+(        address_str = sys.argv[)59.5 632.4 ms
+0 0 0.753 r
+(1)s
+0 g
+(].strip\(\))s
+(        port_num_str = sys.argv[)59.5 622.4 ms
+0 0 0.753 r
+(2)s
+0 g
+(].strip\(\))s
+(        file_name = sys.argv[)59.5 612.4 ms
+0 0 0.753 r
+(3)s
+0 g
+(].strip\(\))s
+(    )59.5 602.4 ms
+0 0.502 0 r
+(except)s
+0 g
+( )s
+0 0.502 0 r
+(IndexError)s
+0 g
+(:)s
+(        error\(MISSING_ARG_ERR\))59.5 592.4 ms
+(    )59.5 582.4 ms
+(    port_num = convert_portno_str\(port_num_str\))59.5 572.4 ms
+(    )59.5 562.4 ms
+(    )59.5 552.4 ms
+0 0.502 0 r
+(return)s
+0 g
+( address_str, port_num, file_name)s
+0.753 0 0 r
+(#def write_bytes_to_file\(file_name, byte_data\):)59.5 522.4 ms
+0 g
+(    )59.5 512.4 ms
+0.753 0 0 r
+(#"""Takes a file_name and a bytearray and writes the byte array )s
+0 g
+(    )59.5 502.4 ms
+0.753 0 0 r
+(#to a file.  If there is an IOError then calls )s
+0 g
+(    )59.5 492.4 ms
+0.753 0 0 r
+(#error\(FILE_ALREADY_EXISTS_ERR\)""")s
+0 g
+(    )59.5 482.4 ms
+0.753 0 0 r
+(#try:)s
+0 g
+(        )59.5 472.4 ms
+0.753 0 0 r
+(#with open\(file_name, 'wb'\) as outfile:)s
+0 g
+(            )59.5 462.4 ms
+0.753 0 0 r
+(#outfile.write\(byte_data\))s
+0 g
+(        )59.5 452.4 ms
+(        )59.5 442.4 ms
+0.753 0 0 r
+(#print\("Wrote?", file_name\))s
+0 g
+(    )59.5 432.4 ms
+0.753 0 0 r
+(#except IOError:)s
+0 g
+(        )59.5 422.4 ms
+0.753 0 0 r
+(#error\(FILE_ALREADY_EXISTS_ERR\))s
+0 g
+(    )59.5 412.4 ms
+0.753 0 0 r
+(#finally:)s
+0 g
+(        )59.5 402.4 ms
+0.753 0 0 r
+(#outfile.close\(\))s
+0 0.502 0 r
+(def)59.5 352.4 ms
+0 g
+( )s
+0.502 0.502 0 r
+(client)s
+0 g
+(\(\):)s
+(    )59.5 342.4 ms
+(    )59.5 332.4 ms
+0.753 0 0 r
+(# Get command line arguments)s
+0 g
+(    address_str, port_num, file_name = get_address_portno_filename\(\))59.5 322.4 ms
+(    )59.5 312.4 ms
+(    )59.5 302.4 ms
+0.753 0 0 r
+(# Get address from address string)s
+0 g
+(    )59.5 292.4 ms
+0 0.502 0 r
+(try)s
+0 g
+(:)s
+(        address = socket.getaddrinfo\(address_str, port_num\)  )59.5 282.4 ms
+0.753 0 0 r
+(# Change to parellel as)s
+(signment?)59.5 272.4 ms
+0 g
+(    )59.5 262.4 ms
+0 0.502 0 r
+(except)s
+0 g
+( socket.gaierror:)s
+(        error\(CANT_CONVERT_ADRESS_ERR\))59.5 252.4 ms
+(    )59.5 242.4 ms
+(    )59.5 232.4 ms
+0.753 0 0 r
+(# Check that the requested file doesen't already exist locally)s
+0 g
+(    )59.5 222.4 ms
+0.753 0 0 r
+(#if file_exists_locally\(file_name\):)s
+0 g
+(    )59.5 212.4 ms
+0 0.502 0 r
+(if)s
+0 g
+( )s
+0.502 0.502 0 r
+(False)s
+0 g
+(:  )s
+0.753 0 0 r
+(# Temp)s
+0 g
+(        error\(FILE_ALREADY_EXISTS_ERR.)59.5 202.4 ms
+0.502 0.502 0 r
+(format)s
+0 g
+(\(os.path.basename\(file_name\)\)\)        )s
+(    )59.5 192.4 ms
+(    )59.5 182.4 ms
+0.753 0 0 r
+(# Create a socket)s
+0 g
+(    )59.5 172.4 ms
+0 0.502 0 r
+(try)s
+0 g
+(:)s
+(        sockfd = socket.socket\(socket.AF_INET, socket.SOCK_STREAM\))59.5 162.4 ms
+(        sockfd.settimeout\(TIMEOUT\))59.5 152.4 ms
+(    )59.5 142.4 ms
+0 0.502 0 r
+(except)s
+0 g
+( socket.gaierror:)s
+(        error\(COULDNT_CREATE_ERR\))59.5 132.4 ms
+(    )59.5 122.4 ms
+(    )59.5 112.4 ms
+0.753 0 0 r
+(# Try to connect)s
+0 g
+(    )59.5 102.4 ms
+0 0.502 0 r
+(try)s
+0 g
+(:)s
+(        sockfd.connect\(address[)59.5 92.4 ms
+0 0 0.753 r
+(0)s
+0 g
+(][)s
+0 0 0.753 r
+(4)s
+0 g
+(]\))s
+(    )59.5 82.4 ms
+0 0.502 0 r
+(except)s
+0 g
+( ConnectionRefusedError:)s
+(        sockfd.close\(\))59.5 72.4 ms
+(        error\(COULDNT_CONNECT_ERR\))59.5 62.4 ms
+(    )59.5 52.4 ms
+re sp
+%%PageTrailer
+%%Page: 2 2
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(client.py                                                                     Page 2)59.5 792.4 ms
+F0 sf
+(    )59.5 772.4 ms
+0.753 0 0 r
+(# Build a FileRequest)s
+0 g
+(    file_request = FileRequest\(file_name\))59.5 762.4 ms
+(    )59.5 752.4 ms
+(    )59.5 742.4 ms
+0.753 0 0 r
+(# Send FileRequest)s
+0 g
+(    n_bytes_sent = sockfd.send\(file_request.get_bytearray\(\)\))59.5 732.4 ms
+(    )59.5 722.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\(n_bytes_sent, )s
+0 0 0.753 r
+("Bytes sent")s
+0 g
+(\))s
+(    )59.5 712.4 ms
+(    )59.5 702.4 ms
+0.753 0 0 r
+(# Recieve a number of bytes equal to the length of the header)s
+0 g
+(    server_file_response_header = sockfd.recv\(FileResponse.header_byte_len\(\)\))59.5 692.4 ms
+(    )59.5 682.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\()s
+0 0 0.753 r
+("Response header:")s
+0 g
+(, server_file_response_header\))s
+(    )59.5 672.4 ms
+0 0.502 0 r
+(for)s
+0 g
+( byte )s
+0 0.502 0 r
+(in)s
+0 g
+( server_file_response_header:)s
+(        )59.5 662.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\(byte\))s
+(    )59.5 652.4 ms
+(    )59.5 642.4 ms
+0.753 0 0 r
+(# Check header validity)s
+0 g
+(    )59.5 632.4 ms
+0 0.502 0 r
+(if)s
+0 g
+( )s
+0 0.502 0 r
+(not)s
+0 g
+( FileResponse.is_valid_FileResponse\(server_file_response_header\):)s
+(        error\(INVALID_FILE_RESPONSE_ERR\))59.5 622.4 ms
+(    )59.5 612.4 ms
+(    )59.5 602.4 ms
+0.753 0 0 r
+(# Extract DataLen from header  Do I need this if I'm recieving in blocks?)s
+0 g
+(    status, DataLen = FileResponse.get_status_DataLen\(server_file_response_header\))59.5 592.4 ms
+(    )59.5 582.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\()s
+0 0 0.753 r
+("Header DataLen:")s
+0 g
+(, DataLen\))s
+(    )59.5 572.4 ms
+(    )59.5 562.4 ms
+0.753 0 0 r
+(## Recieve an amount of bytes equal to the length of the file \(Temp?\))s
+0 g
+(    )59.5 552.4 ms
+0.753 0 0 r
+(#file_bytearray = sockfd.recv\(DataLen\))s
+0 g
+(    )59.5 542.4 ms
+(    )59.5 532.4 ms
+0.753 0 0 r
+(# Write bytearray to local file)s
+0 g
+(    new_filename = os.path.join\(os.path.dirname\(file_name\), )59.5 522.4 ms
+0 0 0.753 r
+("new_")s
+0 g
+(+os.path.basename\()s
+(file_name\)\))59.5 512.4 ms
+(    )59.5 502.4 ms
+0.753 0 0 r
+(#write_bytes_to_file\(new_filename, file_bytearray\))s
+0 g
+(    )59.5 492.4 ms
+0 0.502 0 r
+(if)s
+0 g
+( status == )s
+0 0 0.753 r
+(1)s
+0 g
+(:)s
+(        download_file_from_socket\(new_filename, sockfd\))59.5 482.4 ms
+(    )59.5 472.4 ms
+0 0.502 0 r
+(else)s
+0 g
+(:)s
+(        )59.5 462.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\()s
+0 0 0.753 r
+("Server couldn't get the file.")s
+0 g
+(\))s
+(    )59.5 452.4 ms
+0 0.502 0 r
+(def)59.5 392.4 ms
+0 g
+( )s
+0.502 0.502 0 r
+(download_file_from_socket)s
+0 g
+(\(file_name, sockfd\):)s
+(    )59.5 382.4 ms
+0 0.502 0 r
+(try)s
+0 g
+(:)s
+(        outfile = )59.5 372.4 ms
+0.502 0.502 0 r
+(open)s
+0 g
+(\(file_name, )s
+0 0 0.753 r
+('wb')s
+0 g
+(\))s
+(        )59.5 362.4 ms
+(        downloaded_bytes = )59.5 352.4 ms
+0 0 0.753 r
+(0)s
+0 g
+(        reached_EOF = )59.5 342.4 ms
+0.502 0.502 0 r
+(False)s
+0 g
+(        )59.5 332.4 ms
+0 0.502 0 r
+(while)s
+0 g
+( )s
+0 0.502 0 r
+(not)s
+0 g
+( reached_EOF:)s
+(            )59.5 322.4 ms
+(            data_block = sockfd.recv\(BLOCK_SIZE\)  )59.5 312.4 ms
+0.753 0 0 r
+(#data_block acts like a buffer)s
+0 g
+(            )59.5 302.4 ms
+0.753 0 0 r
+(#print\("Recieved bytes:", len\(data_block\)\))s
+0 g
+(            )59.5 292.4 ms
+(            )59.5 282.4 ms
+0 0.502 0 r
+(if)s
+0 g
+( data_block )s
+0 0.502 0 r
+(is)s
+0 g
+( )s
+0.502 0.502 0 r
+(None)s
+0 g
+(:   )s
+0.753 0 0 r
+(# Nessesary?)s
+0 g
+(                reached_EOF = )59.5 272.4 ms
+0.502 0.502 0 r
+(True)s
+0 g
+(                )59.5 262.4 ms
+0 0.502 0 r
+(break)s
+0 g
+(            )59.5 252.4 ms
+0 0.502 0 r
+(if)s
+0 g
+( )s
+0.502 0.502 0 r
+(len)s
+0 g
+(\(data_block\) <= )s
+0 0 0.753 r
+(0)s
+0 g
+(:)s
+(                )59.5 242.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\()s
+0 0 0.753 r
+("Less than Block")s
+0 g
+(, )s
+0.502 0.502 0 r
+(len)s
+0 g
+(\(data_block\)\))s
+(                reached_EOF = )59.5 232.4 ms
+0.502 0.502 0 r
+(True)s
+0 g
+(            )59.5 222.4 ms
+(            outfile.write\(data_block\))59.5 212.4 ms
+(            downloaded_bytes += )59.5 202.4 ms
+0.502 0.502 0 r
+(len)s
+0 g
+(\(data_block\))s
+(            )59.5 192.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\()s
+0 0 0.753 r
+("downloaded {} bytes")s
+0 g
+(.)s
+0.502 0.502 0 r
+(format)s
+0 g
+(\(downloaded_bytes\)\))s
+(            time.sleep\()59.5 182.4 ms
+0 0 0.753 r
+(0.01)s
+0 g
+(\))s
+(        )59.5 172.4 ms
+(    )59.5 162.4 ms
+0 0.502 0 r
+(except)s
+0 g
+( )s
+0 0.502 0 r
+(IOError)s
+0 g
+( )s
+0 0.502 0 r
+(as)s
+0 g
+( e:)s
+(        )59.5 152.4 ms
+0.502 0.502 0 r
+(print)s
+0 g
+(\(e\))s
+(        error\(COULDNT_WRITE_FILE_ERR\))59.5 142.4 ms
+(    )59.5 132.4 ms
+0 0.502 0 r
+(finally)s
+0 g
+(:)s
+(        outfile.close\(\))59.5 122.4 ms
+(        sockfd.close\(\))59.5 112.4 ms
+re sp
+%%PageTrailer
+%%Page: 3 3
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(client.py                                                                     Page 3)59.5 792.4 ms
+F0 sf
+(client\(\))59.5 772.4 ms
+re sp
+%%PageTrailer
+%%Trailer
+%%Pages: 3
+%%EOF
+
