@@ -33,8 +33,11 @@ def _add_directory_for(file_name):
     where the file resides does not exist, it creates that 
     directory to put the file in."""
     base_dir = os.path.dirname(file_name)
-    if not os.path.exists(base_dir):
-        os.makedirs(base_dir)
+    try:
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+    except FileNotFoundError:
+        pass
 
 
 def download_file_from_socket(file_name, client_socket, file_size):
@@ -140,6 +143,7 @@ def main():
         
         # Send FileRequest
         try:
+            #n_bytes_sent = send_all(file_request.get_bytearray(), client_socket)
             n_bytes_sent = client_socket.sendall(file_request.get_bytearray())
             print(n_bytes_sent, "Bytes sent")
         except OSError:
