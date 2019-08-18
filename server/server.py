@@ -40,7 +40,6 @@ def build_file_response(file_name):
         status_code = 0
         file_bytearray = bytearray(0)
     
-    print("Outgoing file len:", len(file_bytearray))
     return FileResponse(file_bytearray, status_code)
 
 
@@ -148,10 +147,8 @@ def main():
     
     finally:
         if client_socket is not None:
-            print("Client is closed.")
             client_socket.close()
         if server_socket is not None:
-            print("Server is closed.")
             server_socket.close()
             
         

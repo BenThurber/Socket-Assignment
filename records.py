@@ -40,7 +40,7 @@ BYTE_LEN = 8
 BLOCK_SIZE = 4096
 ENCODING_TYPE = "UTF-8"
 
-FILE_REQUEST_MAGIC_NO = 0x497E   # Is it in network byte order?
+FILE_REQUEST_MAGIC_NO = 0x497E
 FILE_REQUEST_TYPE = 1
 MAX_FILENAME_LEN = 1024
 
@@ -205,7 +205,9 @@ class FileRequest(Record):
     def header_bit_len():
         """Returns the len of the header in bits."""
         try:
-            return sum(bit_len for bit_len, _ in FileRequest.HEADER_DICT.values())
+            return sum(
+                bit_len for bit_len, _ in FileRequest.HEADER_DICT.values()
+            )
         except NameError:
             return 0
     
@@ -416,7 +418,9 @@ class FileResponse(Record):
     def header_bit_len():
         """Returns the len of the header in bits."""
         try:
-            return sum(bit_len for bit_len, _ in FileResponse.HEADER_DICT.values())
+            return sum(
+                bit_len for bit_len, _ in FileResponse.HEADER_DICT.values()
+            )
         except NameError:
             return 0
     

@@ -64,12 +64,10 @@ def download_file_from_socket(file_name, client_socket, file_size):
             
             # Have we recieved the whole file?
             if downloaded_bytes + len(data_block) >= file_size:
-                print("Less than Block", len(data_block))
                 reached_EOF = True
             
             outfile.write(data_block)
             downloaded_bytes += len(data_block)
-            print("downloaded {} bytes".format(downloaded_bytes))
         
     except socket.timeout:
         error(TIMOUT_ERR)
@@ -138,13 +136,11 @@ def main():
         
         # Build a FileRequest
         file_request = FileRequest(file_name)
-        print("File Request:", file_request.get_bytearray())
         
         
         # Send FileRequest
         try:
             n_bytes_sent = send_all(file_request.get_bytearray(), client_socket)
-            print(n_bytes_sent, "Bytes sent")
         except OSError:
             error(COULDNT_SEND_ERR)
         
@@ -156,9 +152,6 @@ def main():
         server_file_response_header = FileResponse.header_to_host_byte_ord(
             server_file_response_header
         )
-        print("Response header:", server_file_response_header)
-        for byte in server_file_response_header:
-            print(byte)
         
         
         # Check header validity
@@ -197,8 +190,6 @@ def main():
 
 
        
-
-
 
 if __name__ == "__main__":
     main()
