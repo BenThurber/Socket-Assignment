@@ -32,32 +32,40 @@ def build_file_response(file_name):
 
 
 
-def print_sent_message(file_name, num_bytes_sent):
+def print_sent_message(file_name, num_bytes_sent, success=True):
     """Prints a message describing what was sent to the client."""
-    print(SENT_FILE_MESSAGE.format(os.path.basename(file_name), num_bytes_sent))
+    if success:
+        print(SENT_FILE_MESSAGE.format(
+            os.path.basename(file_name), num_bytes_sent
+        ))
+    else:
+        print(COULDNT_SENT_FILE_MESSAGE.format(
+            os.path.basename(file_name), num_bytes_sent
+        ))
 
 
 def server():
-    serversocket = None
+    server_socket = None
     client_socket = None
     
     try:
+        # Get port number from command line args
         port_num = get_server_port_number()
         
         # Create and Bind
         try:
-            serversocket = socket.socket()
-            serversocket.settimeout(TIMEOUT)
-            serversocket.bind((LOCAL_HOST, port_num))
-        except socket.gaierror:
-            serversocket.close()
+            # Create server socket
+            server_socket = socket.socket()
+            host_address = socket.gethostbyname(socket.gethostname())
+            # Bind to host address
+            server_socket.bind((host_address, port_num))
+        except OSError:
             error(COULDNT_BIND_ERR)
         
         # Listen
         try:
-            serversocket.listen()
-        except OSError:  # What error should this be?
-            serversocket.close()
+            server_socket.listen()
+        except OSError:
             error(SOCKET_LISTEN_ERR)
         
         
@@ -66,7 +74,7 @@ def server():
         while True:
             
             # Accept incomming connection request
-            client_socket, client_addr = serversocket.accept()
+            client_socket, client_addr = server_socket.accept()
             client_socket.settimeout(TIMEOUT)
             
             # Recieve header from connection
@@ -74,35 +82,28 @@ def server():
                 FileRequest.header_byte_len()
             )
             
-            if len(client_request_header) != FileRequest.header_byte_len():
-                error(INVALID_FILE_REQUEST_ERR)
-            
-            print("File Request nbo:", client_request_header)
-            
             # Convert to host byte order
             client_request_header = FileRequest.header_to_host_byte_ord(
                 client_request_header
             )
             
-            print("File Request hbo:", client_request_header)
-            
             # Check header validity
             if not FileRequest.is_valid_header(client_request_header):
-                error(INVALID_FILE_REQUEST_ERR)
+                error(INVALID_FILE_REQUEST_ERR, exit_all=False)
+                continue
+            
             # Extract filenameLen from header
-            file_name_len = FileRequest.get_filenameLen_from_header(client_request_header)
+            file_name_len = FileRequest.get_filenameLen_from_header(
+                client_request_header
+            )
             
             # Read just the filename from socket
             file_name_bytes = client_socket.recv(file_name_len)
             file_name = file_name_bytes.decode(ENCODING_TYPE)
             
-            # Check length of recieved bytes
-            if len(file_name_bytes) != file_name_len:
-                error(INVALID_FILE_REQUEST_ERR)
             
             # Send FileResponse in blocks
             status_code = int(file_exists_locally(file_name))
-            print("File_size =", os.path.getsize(file_name))
             file_response = FileResponse(file_name, status_code)
             try:
                 num_bytes_sent = 0
@@ -112,25 +113,32 @@ def server():
             except OSError:
                 error(COULDNT_SEND_ERR)
             
-            print_sent_message(file_name, num_bytes_sent)
+            
+            # Close this client socket
+            #client_socket.close()
+            
+            
+            # Print an informational message 
+            # (differentiates between sucessful send and not sucessful)
+            print_sent_message(file_name, num_bytes_sent, status_code)
             
             
                     
             
-            client_socket.shutdown(socket.SHUT_WR)
             
             
-            client_socket.close()
     
     except socket.timeout:
         error(TIMOUT_ERR)
     
     finally:
-        print("Everything is closed.")
-        if client_socket is not None:
+        if client_socket is not None and not client_socket._closed:
+            print("Client is closed.")
             client_socket.close()
-        if serversocket is not None:
-            serversocket.close()
+        if server_socket is not None and not server_socket._closed:
+            print("Server is closed.")
+            server_socket.close()
+            
         
         
     

@@ -9,7 +9,7 @@ BLOCK_SIZE = 4096
 
 SMALL_TIME = 0.0002  # For Debugging
 
-TIMEOUT = 5.0    # Timeout in seconds
+TIMEOUT = 1.0    # Timeout in seconds
 
 BAD_PORT_NUMBER_ERR = "ERROR port number is not in not in the range {} to {} \
 or it is a bad format.".format(MIN_PORT_NUM, MAX_PORT_NUM)
@@ -27,7 +27,9 @@ INVALID_FILE_RESPONSE_ERR = "ERROR invalid FileResponse"
 COULDNT_WRITE_FILE_ERR = "ERROR couldn't write file to disk."
 FILE_NOT_ON_SERVER_ERR = "ERROR the server couldn't retrieve the file."
 
-SENT_FILE_MESSAGE = "Sent {} to client, {} bytes transfered."
+SENT_FILE_MESSAGE = 'Sent "{}" to client, {} bytes transfered.'
+COULDNT_SENT_FILE_MESSAGE = 'The file "{}" does not exist, and could not be \
+transfered.  FileResponse sent to client.  {} bytes transfered.'
 
 LOCAL_HOST = "127.0.0.1"  # or locallhost.com
 
