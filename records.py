@@ -1,7 +1,22 @@
 """A module containing FileRequest and FileResponse which are 
 subclasses of Record, which is a subclasses of Packet 
-(as defined in packet.py).  FileRequest and FileResponse arrange 
-packets (bytearrays) in the arrangement specific to each type.
+(as defined in packet.py).  
+
+FileRequest and FileResponse build packets (bytearrays) in the 
+arrangement specific to each type, and in network byte order.  
+Each contain an OrderedDict that defines the format of their 
+header.
+
+FileRequest creates an explicit bytearray of Header + FileName 
+which can then be sent over the network.
+
+FileResponse can also create an explicit bytearray of 
+Header + FileData, or can return Header + FileData in 
+blocks of BLOCK_SIZE.  See FileResponse.read_byte_block()
+
+Each class also has static methods that accept a bytearray 
+(recieved over the network) convert it host_byte_order, verify 
+that it has a valid header, and read values from the header.
 
 The following is the inheritance tree.
 
@@ -288,12 +303,14 @@ class FileResponse(Record):
     
     
     def read_byte_block(self):
-        """a generator that opens a file handle 
+        """A generator that opens a file handle 
         on file_name and returns an amount of bytes equal to 
         BLOCK_SIZE.  First returns header + a part of the file as a 
         bytearray, then returns an amount of the file equal to 
         BLOCK_SIZE on each following itteration.  When the whole 
-        file is transfered, the file handle is closed.
+        file is transfered, the file handle is closed.  This way the 
+        whole file is never read into memory.  Use this for big 
+        files instead of get_bytearray()
         """
         header_bytearray = super().get_bytearray()
         self.bytes_read = 0

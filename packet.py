@@ -1,5 +1,12 @@
 """A class that handles low level bit and byte operations on an
-internal bytearray."""
+internal bytearray.  (Recycled from SuperQuiz)  
+
+Bits or bytes can be added to a packet with Packet.append() and 
+Bits or bytes can be retrived with get_from_bytes and 
+get_from_bits.  The contents of the packet can be obtained from 
+Packet.get_bytearray().
+"""
+
 import math
 
 BYTE_LEN = 8

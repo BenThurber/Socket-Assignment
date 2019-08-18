@@ -1,13 +1,11 @@
-"""Functions and constants that are common to both client.py and 
-server.py"""
+"""Functions and constants that are used by (common to) both 
+client.py and server.py
+"""
 
 import os
 
 MIN_PORT_NUM = 1024
 MAX_PORT_NUM = 64000
-BLOCK_SIZE = 4096
-
-SMALL_TIME = 0.0002  # For Debugging
 
 TIMEOUT = 1.0    # Timeout in seconds
 
@@ -31,14 +29,15 @@ SENT_FILE_MESSAGE = 'Sent "{}" to client, {} bytes transfered.'
 COULDNT_SENT_FILE_MESSAGE = 'The file "{}" does not exist, and could not be \
 transfered.  FileResponse sent to client.  {} bytes transfered.'
 
-LOCAL_HOST = "127.0.0.1"  # or locallhost.com
+RECEIVED_FILE_MESSAGE = 'Received "{}" from server, {} bytes received.'
+COULDNT_RECEIVE_FILE_MESSAGE = 'The file "{}" does not exist on the server, \
+and could not be transfered.  FileResponse recieved from server.  {} bytes \
+transfered.'
 
 
-def error(message="", *sockets, exit_all=True):
+
+def error(message="", exit_all=True):
     """exits with an error message."""
-    for socket in sockets:   # Use a finnaly block instead
-        if socket is not None:
-            socket.close()
     if exit_all:
         exit(message)
     else:

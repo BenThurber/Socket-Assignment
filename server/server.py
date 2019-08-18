@@ -1,17 +1,25 @@
-"""This contains the main function for the server.  
-Run with 'python server.py <port number>
-'"""
+'''This contains the main function for the server.  
+Run with "python server.py <port number>"
 
-from records import FileRequest, FileResponse, ENCODING_TYPE
+Creates a server that waits for connections from clients.  
+Accepts a FileRequest and sends back a FileResponse with 
+the file if it exists on the server.
+
+To send the file to the client, the server reads the file 
+locally in blocks; reading a block of BLOCK_SIZE, sending 
+that block, and so on.  This way the entire file is never 
+read into memory.
+'''
+
+from records import FileRequest, FileResponse, ENCODING_TYPE, BLOCK_SIZE
 import socket
 from common import *
-import time
 import sys
 
 
 def get_server_port_number():
     """Parses passed command line arguments to get the port number."""
-    # Get cammand line arg and check that is exists
+    # Get command line arg and check that is exists
     try:
         port_num_str = sys.argv[1].strip()
     except IndexError:
@@ -20,7 +28,10 @@ def get_server_port_number():
     return convert_portno_str(port_num_str)
 
 
-def build_file_response(file_name): 
+def build_file_response(file_name):
+    """Takes a file_name (directory) and retuns a valid 
+    FileResponse object.  Checks that the file exists on 
+    the server and sets the StatusCode appropriately."""
     if file_exists_locally(file_name):
         status_code = 1
         file_bytearray = bytearray(open(file_name, "rb").read())
@@ -46,7 +57,9 @@ def print_sent_message(file_name, num_bytes_sent, success=True):
         ))
 
 
-def server():
+def main():
+    """Main function to run the server from.  Needs to be 
+    run from the command line.  See Module docstring."""
     server_socket = None
     client_socket = None
     
@@ -71,13 +84,14 @@ def server():
             error(SOCKET_LISTEN_ERR)
         
         
-    
-        # Accept incomming requests
+        
+        # Continually accept() incomming requests
         while True:
             
             # Accept incomming connection request
             client_socket, client_addr = server_socket.accept()
             client_socket.settimeout(TIMEOUT)
+            
             
             # Recieve header from connection
             client_request_header = client_socket.recv(
@@ -93,6 +107,7 @@ def server():
             if not FileRequest.is_valid_header(client_request_header):
                 error(INVALID_FILE_REQUEST_ERR, exit_all=False)
                 continue
+            
             
             # Extract filenameLen from header
             file_name_len = FileRequest.get_filenameLen_from_header(
@@ -117,14 +132,12 @@ def server():
             
             
             # Close this client socket
-            #client_socket.close()
+            client_socket.close()
             
             
             # Print an informational message 
             # (differentiates between sucessful send and not sucessful)
             print_sent_message(file_name, num_bytes_sent, status_code)
-            
-            
                     
             
             
@@ -134,14 +147,14 @@ def server():
         error(TIMOUT_ERR)
     
     finally:
-        if client_socket is not None and not client_socket._closed:
+        if client_socket is not None:
             print("Client is closed.")
             client_socket.close()
-        if server_socket is not None and not server_socket._closed:
+        if server_socket is not None:
             print("Server is closed.")
             server_socket.close()
             
         
         
 if __name__ == "__main__":
-    server()
+    main()
