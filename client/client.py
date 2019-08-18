@@ -77,8 +77,7 @@ def client():
             error(CANT_CONVERT_ADRESS_ERR)
         
         # Check that the requested file doesen't already exist locally
-        #if file_exists_locally(file_name):
-        if False:  # Temp
+        if file_exists_locally(file_name):
             error(FILE_ALREADY_EXISTS_ERR.format(os.path.basename(file_name)))        
         
         # Create a socket
@@ -122,14 +121,10 @@ def client():
         status,DataLen = FileResponse.get_status_DataLen(server_file_response_header)
         print("Header DataLen:", DataLen)
         
-        ## Recieve an amount of bytes equal to the length of the file (Temp?)
-        #file_bytearray = client_socket.recv(DataLen)
         
         # Write bytearray to local file
-        new_filename = os.path.join(os.path.dirname(file_name), "new_"+os.path.basename(file_name))
-        #write_bytes_to_file(new_filename, file_bytearray)
         if status == 1:
-            download_file_from_socket(new_filename, client_socket, DataLen)
+            download_file_from_socket(file_name, client_socket, DataLen)
         else:
             error(FILE_NOT_ON_SERVER_ERR)
         
@@ -137,9 +132,7 @@ def client():
     except socket.timeout:
         error(TIMOUT_ERR)
     finally:
-        print("Everything is closed.")
         if client_socket is not None and not client_socket._closed:
-            #client_socket.shutdown(socket.SHUT_RDWR)
             client_socket.close()
         
 
@@ -148,5 +141,5 @@ def client():
 
 
 
-
-client()
+if __name__ == "__main__":
+    client()

@@ -1,4 +1,6 @@
-"""Run with 'python server.py <port number>'"""
+"""This contains the main function for the server.  
+Run with 'python server.py <port number>
+'"""
 
 from records import FileRequest, FileResponse, ENCODING_TYPE
 import socket
@@ -141,5 +143,5 @@ def server():
             
         
         
-    
-server()
+if __name__ == "__main__":
+    server()

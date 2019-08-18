@@ -9,8 +9,8 @@ cd '/Users/Ben/Desktop/COSC 264/Socket Assignment/'
 #(echo ":syntax on"; echo ":hardcopy > pdf_fragments/postscript/records.ps") | vim records.py
 #(echo ":syntax on"; echo ":hardcopy > pdf_fragments/postscript/common.ps") | vim common.py
 
-vim +'syntax on | hardcopy > pdf_fragments/postscript/server.ps | q!' server.py
-vim +'syntax on | hardcopy > pdf_fragments/postscript/client.ps | q!' client.py
+vim +'syntax on | hardcopy > pdf_fragments/postscript/server.ps | q!' server/server.py
+vim +'syntax on | hardcopy > pdf_fragments/postscript/client.ps | q!' client/client.py
 vim +'syntax on | hardcopy > pdf_fragments/postscript/packet.ps | q!' packet.py
 vim +'syntax on | hardcopy > pdf_fragments/postscript/records.ps | q!' records.py
 vim +'syntax on | hardcopy > pdf_fragments/postscript/common.ps | q!' common.py
