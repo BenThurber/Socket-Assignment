@@ -56,7 +56,7 @@ def download_file_from_socket(file_name, client_socket, file_size):
         while not reached_EOF:
             
             #data_block acts as a buffer
-            data_block = client_socket.recv(BLOCK_SIZE)
+            data_block = recv_all(BLOCK_SIZE, client_socket)
             
             if data_block is None:
                 reached_EOF = True
@@ -150,7 +150,9 @@ def main():
         
         
         # Recieve a number of bytes equal to the length of the header
-        server_file_response_header = client_socket.recv(FileResponse.header_byte_len())
+        server_file_response_header = recv_all(
+            FileResponse.header_byte_len(), client_socket
+        )
         server_file_response_header = FileResponse.header_to_host_byte_ord(
             server_file_response_header
         )

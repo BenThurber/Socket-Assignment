@@ -45,8 +45,10 @@ def error(message="", exit_all=True):
 
 
 def send_all(data, sock):
-    """Equivalent to socket.sendall but counts and returns 
-    the number of bytes transfered."""
+    """Takes a bytearray and an open socket.  
+    Equivalent to socket.sendall but counts and returns 
+    the number of bytes transfered.  Calls socket.send() 
+    until all bytes are sent."""
     sent_bytes = 0
     while sent_bytes < len(data):
         sent_bytes += sock.send(data[sent_bytes:])
@@ -54,8 +56,21 @@ def send_all(data, sock):
     return sent_bytes
 
 
-def recv_all(data, sock):
-    pass
+def recv_all(num_bytes, sock):
+    """Takes a number of bytes to recieve, and an open socket.
+    Calls socket.send() until all bytes are sent."""
+    data = bytearray()
+    next_block = bytearray()
+    while len(data) < num_bytes:
+        
+        next_block = sock.recv(num_bytes - len(data))
+        
+        if len(next_block) <= 0:
+            break
+        
+        data.extend(next_block)
+    
+    return data
 
     
 def convert_portno_str(port_num):

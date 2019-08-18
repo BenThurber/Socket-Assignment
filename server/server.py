@@ -94,8 +94,8 @@ def main():
             
             
             # Recieve header from connection
-            client_request_header = client_socket.recv(
-                FileRequest.header_byte_len()
+            client_request_header = recv_all(
+                FileRequest.header_byte_len(), client_socket
             )
             
             # Convert to host byte order
@@ -115,7 +115,7 @@ def main():
             )
             
             # Read just the filename from socket
-            file_name_bytes = client_socket.recv(file_name_len)
+            file_name_bytes = recv_all(file_name_len, client_socket)
             file_name = file_name_bytes.decode(ENCODING_TYPE)
             
             
