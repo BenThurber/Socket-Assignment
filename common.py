@@ -87,6 +87,7 @@ def convert_portno_str(port_num):
 
 def file_exists_locally(file_name):
     """Returns True if file_name exists AND it can be opened locally."""
+    infile = None
     file_exists = False
     # Test if the file can be opened
     if os.path.exists(file_name):
@@ -97,6 +98,7 @@ def file_exists_locally(file_name):
         except IOError:
             file_exists = False
         finally:
-            infile.close()
+            if infile is not None:
+                infile.close()
         
     return file_exists
