@@ -143,8 +143,7 @@ def main():
         
         # Send FileRequest
         try:
-            #n_bytes_sent = send_all(file_request.get_bytearray(), client_socket)
-            n_bytes_sent = client_socket.sendall(file_request.get_bytearray())
+            n_bytes_sent = send_all(file_request.get_bytearray(), client_socket)
             print(n_bytes_sent, "Bytes sent")
         except OSError:
             error(COULDNT_SEND_ERR)

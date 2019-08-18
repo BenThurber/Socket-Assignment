@@ -25,9 +25,9 @@ INVALID_FILE_RESPONSE_ERR = "ERROR invalid FileResponse"
 COULDNT_WRITE_FILE_ERR = "ERROR couldn't write file to disk."
 FILE_NOT_ON_SERVER_ERR = "ERROR the server couldn't retrieve the file."
 
-SENT_FILE_MESSAGE = 'Sent "{}" to client, {} bytes transfered.'
+SENT_FILE_MESSAGE = 'Sent "{}" to client, {} bytes sent.'
 COULDNT_SENT_FILE_MESSAGE = 'The file "{}" does not exist, and could not be \
-transfered.  FileResponse sent to client.  {} bytes transfered.'
+transfered.  FileResponse sent to client.  {} bytes sent.'
 
 RECEIVED_FILE_MESSAGE = 'Received "{}" from server, {} bytes received.'
 COULDNT_RECEIVE_FILE_MESSAGE = 'The file "{}" does not exist on the server, \
